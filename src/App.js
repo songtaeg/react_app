@@ -1,63 +1,29 @@
-
-function Header(props){
-  
-  return <div id="header">
-            <div>
-              <a href="#" onClick={()=>{
-               props.printText();
-              }}>{props.title}</a>
-            </div>
-        </div>
-}
-function Main(props){
-  var list=[];
-
-  props.list.forEach(element => {
-    list.push(<li key = {element}> {element} </li>);
-  });
-
-  return <div id="main">
-            <ul>
-              {list}
-            </ul>
-        </div>
-}
-
-function Footer(props){
-  return <div id="footer">
-          <div>
-            <a href="#" onClick={()=>{
-              props.printText(props.message);
-            }}>
-              {props.message}
-            </a>
-          </div>
-        </div>
-}
+import { useRef, useState } from "react";
+import Input from "./component1017/Input";
+import Result from "./component1017/Result";
 
 
 function App() {
-  var subject1=["java","javascript","oracle"];
-  var subject2=["html","css","react","mysql"];
-  //main,footer 컴포넌트 생성,부착
+  const num =useRef();
+  const num2 =useRef();
+  const [result,setResult]=useState({num:"",num2:""});
+
+  const calc=()=>{
+    setResult({
+      num:num.current.value,
+      num2:num2.current.value,
+    });
+  };
+  
   return (
     <>
-      <Header title="react 시작" printText={()=>{
-        console.log("함수 보내기 테스트");
-      }}></Header>
-
-      <Header title="react 재밌어?" printText={()=>{
-        alert("함수 보내기 테스트2");
-      }}></Header>
-
-      <Header title="html?"></Header>
-
-      <Main list={subject1}></Main>
-      <Main list={subject2}></Main>
-
-      <Footer message="asdf" printText={(text)=>{
-        alert(text);
-      }}></Footer>
+      <Result num={result.num} num2={result.num2} />
+      <div>
+          <input ref={num} placeholder='1번째 숫자'></input> <br></br>
+          <input ref={num2} placeholder='2번째 숫자'></input> <br></br>
+          {/* <input placeholder='+,-,*,/'></input> <br></br> */}
+          <button onClick={calc}>계산</button>
+      </div>
     </>
   );
 }
